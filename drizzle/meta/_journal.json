@@ -8,6 +8,13 @@
       "when": 1725123176204,
       "tag": "0000_dusty_sister_grimm",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1725189913929,
+      "tag": "0001_cloudy_paladin",
+      "breakpoints": true
     }
   ]
 }
