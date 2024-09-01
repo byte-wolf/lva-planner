@@ -1,9 +1,9 @@
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
 
-import { Lucia } from "lucia";
+import { Lucia, type RegisteredDatabaseUserAttributes } from "lucia";
 import { dev } from "$app/environment";
 
-import { userTable, sessionTable } from "./schema/authentication";
+import { userTable, sessionTable, type User } from "./schema/authentication";
 import { connectSQLite } from "./sqlite";
 
 const db = connectSQLite();
@@ -16,11 +16,17 @@ export const lucia = new Lucia(adapter, {
             // set to `true` when using HTTPS
             secure: !dev
         }
+    },
+    getUserAttributes: (attributes) => {
+        return {
+            username: attributes.username
+        }
     }
 });
 
 declare module "lucia" {
     interface Register {
         Lucia: typeof lucia;
+        DatabaseUserAttributes: Omit<User, "id">;
     }
 }
