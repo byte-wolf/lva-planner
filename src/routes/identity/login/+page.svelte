@@ -1,25 +1,26 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/ui/button/button.svelte';
+	import Input from '$lib/components/ui/input/input.svelte';
+	import Label from '$lib/components/ui/label/label.svelte';
 </script>
 
 <div class="p-4">
 	<h1 class="pb-6 text-lg font-semibold">Log in</h1>
 
-	<form method="post" use:enhance class="flex flex-col gap-4">
+	<form
+		method="post"
+		use:enhance
+		class="flex w-96 flex-col gap-4 rounded-lg border border-slate-200 p-4"
+	>
 		<div>
-			<label for="username" class="block text-sm font-semibold">Username</label>
-			<input name="username" id="username" class="rounded-xl border px-2.5 py-1.5" />
+			<Label for="username">Username</Label>
+			<Input name="username" id="username" />
 		</div>
 
 		<div>
-			<label for="password" class="block text-sm font-semibold">Password</label>
-			<input
-				type="password"
-				name="password"
-				id="password"
-				class="rounded-xl border px-2.5 py-1.5"
-			/>
+			<Label for="password">Password</Label>
+			<Input type="password" name="password" id="password" />
 		</div>
 
 		<div>
