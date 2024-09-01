@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import Button from '$lib/components/ui/button/button.svelte';
 </script>
 
 <div class="p-4">
@@ -22,9 +23,7 @@
 		</div>
 
 		<div>
-			<button class="rounded-xl bg-black px-3 py-2 font-bold text-white hover:opacity-50">
-				Continue
-			</button>
+			<Button type="submit">Continue</Button>
 		</div>
 	</form>
 </div>
