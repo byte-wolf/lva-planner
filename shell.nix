@@ -6,6 +6,8 @@ in
 pkgs.stdenv.mkDerivation {
   name = "my-shell";
   packages = [  ];
-  shellHook = "";
+  shellHook = ''
+    bun i
+  '';
   buildInputs = [ nodejs bun ];
 }

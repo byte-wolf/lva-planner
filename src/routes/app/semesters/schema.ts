@@ -1,7 +1,8 @@
+import dayjs from 'dayjs';
 import { z } from 'zod';
 
 export const formSchema = z.object({
-    year: z.number().min(1900).max(3000),
+    year: z.coerce.number().gte(1900).lt(3000).default(dayjs().year()),
     isSummerSemester: z.boolean(),
 });
 
