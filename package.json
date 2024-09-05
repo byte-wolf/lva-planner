@@ -39,6 +39,7 @@
   "type": "module",
   "dependencies": {
     "@lucia-auth/adapter-drizzle": "^1.1.0",
+    "@tanstack/svelte-table": "^8.20.5",
     "bits-ui": "^0.21.13",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",

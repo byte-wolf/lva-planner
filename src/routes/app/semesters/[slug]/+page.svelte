@@ -10,6 +10,7 @@
 		TrafficCone
 	} from 'lucide-svelte';
 	import type { PageData } from './$types';
+	import CourseTable from './(components)/CourseTable.svelte';
 
 	export let data: PageData;
 	const { semester } = data;
@@ -65,6 +66,20 @@
 					<div class="text-2xl font-bold">30</div>
 					<p class="text-xs text-muted-foreground">+20.1% from last month</p>
 				</Card.Content>
+			</Card.Root>
+		</div>
+
+		<div>
+			<h2 class="pb-2 pt-4 text-xl font-semibold">Courses</h2>
+		</div>
+
+		<div class="grid grid-cols-4">
+			<Card.Root class="col-span-3">
+				<CourseTable />
+				<!--<Card.Header class="pb-0">
+					<Card.Title></Card.Title>
+				</Card.Header>
+				<Card.Content></Card.Content>-->
 			</Card.Root>
 		</div>
 	</div>
