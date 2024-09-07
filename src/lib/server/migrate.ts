@@ -5,6 +5,12 @@ const db = connectSQLite();
 
 console.log("Starting migration...");
 
-migrate(db, { migrationsFolder: './drizzle' });
+if (db === null) {
+    console.log("Could not connect to database");
+} else {
+    migrate(db, { migrationsFolder: './drizzle' });
 
-console.log("Migration finished");
+    console.log("Migration finished");
+}
+
+

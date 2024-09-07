@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1725123176204,
-      "tag": "0000_dusty_sister_grimm",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1725189913929,
-      "tag": "0001_cloudy_paladin",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1725472723538,
-      "tag": "0002_stormy_shockwave",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1725475828793,
-      "tag": "0003_mean_jazinda",
+      "when": 1725697783699,
+      "tag": "0000_dazzling_quasimodo",
       "breakpoints": true
     }
   ]

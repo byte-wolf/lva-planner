@@ -1,1 +1,0 @@
-CREATE UNIQUE INDEX `semester_year_is_summer_semester_unique` ON `semester` (`year`,`is_summer_semester`);
