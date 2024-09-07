@@ -16,6 +16,7 @@ export const courseTable = sqliteTable("course", {
     id: integer("id").primaryKey({ autoIncrement: true }),
     title: text("title"),
     courseTypeId: integer("course_type_id").references(() => courseTypeTable.id),
+    semesterId: integer("semester_id").references(() => semesterTable.id)
 });
 
 export type Course = typeof courseTable.$inferSelect;
