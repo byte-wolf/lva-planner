@@ -95,6 +95,11 @@
 	</div>
 
 	<div class="flex-grow bg-slate-50 p-4">
+		{#if data.semesters.length === 0}
+			<div class="rounded-md border border-slate-300 p-4 text-slate-500">
+				No semester found. Create one with the button above.
+			</div>
+		{/if}
 		<div class="grid grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3">
 			{#each data.semesters as semester}
 				<a class="w-full text-left" href="semesters/{semester.id}">
