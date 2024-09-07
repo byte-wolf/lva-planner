@@ -183,11 +183,11 @@
 				<tr class:bg-slate-50={row.getIsSelected()}>
 					{#each row.getVisibleCells() as cell}
 						<td class="border-t px-3 py-2">
-							<span class="truncate">
+							<div class="flex items-center truncate">
 								<svelte:component
 									this={flexRender(cell.column.columnDef.cell, cell.getContext())}
 								/>
-							</span>
+							</div>
 						</td>
 					{/each}
 				</tr>

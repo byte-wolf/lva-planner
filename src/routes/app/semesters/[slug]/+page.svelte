@@ -1,14 +1,7 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import {
-		ArrowLeft,
-		Check,
-		ChevronLeft,
-		DollarSign,
-		GraduationCap,
-		TrafficCone
-	} from 'lucide-svelte';
+	import { ArrowLeft, Check, GraduationCap, TrafficCone } from 'lucide-svelte';
 	import type { PageData } from './$types';
 	import CourseTable from './(components)/CourseTable.svelte';
 
