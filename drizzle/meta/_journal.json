@@ -8,6 +8,13 @@
       "when": 1725697783699,
       "tag": "0000_dazzling_quasimodo",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1725718305322,
+      "tag": "0001_burly_meteorite",
+      "breakpoints": true
     }
   ]
 }

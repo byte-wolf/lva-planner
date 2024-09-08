@@ -2,7 +2,6 @@
 	import * as Form from '$lib/components/ui/form';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
-	import { fade, fly } from 'svelte/transition';
 	import type { PageData } from './$types';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index';
@@ -15,7 +14,6 @@
 	import { formSchema } from './schema';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import Switch from '$lib/components/ui/switch/switch.svelte';
-	import { error } from '@sveltejs/kit';
 	import { buttonVariants } from '$lib/components/ui/button';
 	import { LoaderCircle } from 'lucide-svelte';
 

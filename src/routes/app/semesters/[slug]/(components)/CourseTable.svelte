@@ -8,47 +8,23 @@
 		renderComponent
 	} from '@tanstack/svelte-table';
 	import type { ColumnDef, OnChangeFn, SortingState, TableOptions } from '@tanstack/svelte-table';
-	import { Checkbox } from '$lib/components/ui/checkbox/index.js';
 	import { ChevronDown, ChevronsDown, ChevronsUp, ChevronsUpDown, ChevronUp } from 'lucide-svelte';
 	import RowCheckbox from './RowCheckbox.svelte';
+	import type { Course } from '$lib/server/schema/business';
+	import { compareAsc, format, isValid } from 'date-fns';
+	import { fade } from 'svelte/transition';
 
-	type Person = {
-		firstName: string;
-		lastName: string;
-		age: number;
-		visits: number;
-		status: string;
-		progress: number;
+	type CourseData = Course & {
+		courseType: {
+			id: number;
+			label: string | null;
+		} | null;
 	};
 
-	const defaultData: Person[] = [
-		{
-			firstName: 'tanner',
-			lastName: 'linsley',
-			age: 24,
-			visits: 100,
-			status: 'In Relationship',
-			progress: 50
-		},
-		{
-			firstName: 'tandy',
-			lastName: 'miller',
-			age: 40,
-			visits: 40,
-			status: 'Single',
-			progress: 80
-		},
-		{
-			firstName: 'joe',
-			lastName: 'dirte',
-			age: 45,
-			visits: 20,
-			status: 'Complicated',
-			progress: 10
-		}
-	];
+	export let courses: CourseData[] = [];
+	export let selected: CourseData[] = [];
 
-	const defaultColumns: ColumnDef<Person>[] = [
+	const defaultColumns: ColumnDef<CourseData>[] = [
 		{
 			id: 'select',
 			header: ({ table }) => {
@@ -65,38 +41,54 @@
 			}
 		},
 		{
-			accessorKey: 'firstName',
-			cell: (info) => info.getValue(),
-			footer: (info) => info.column.id
+			id: 'courseType',
+			header: 'Course type',
+			accessorFn: (course) => course.courseType?.label,
+			cell: (info) => info.getValue()
 		},
 		{
-			accessorFn: (row) => row.lastName,
-			id: 'lastName',
-			cell: (info) => info.getValue(),
-			header: () => 'Last Name',
-			footer: (info) => info.column.id
+			accessorKey: 'title',
+			header: 'Title',
+			cell: (info) => info.getValue()
 		},
 		{
-			accessorKey: 'age',
-			header: () => 'Age',
-			footer: (info) => info.column.id
+			accessorFn: (course) =>
+				course.registerCourseTimestamp
+					? format(course.registerCourseTimestamp, 'dd.MM.yyyy HH:mm')
+					: 'N/A',
+			header: 'Start of registration',
+			cell: (info) => info.getValue() ?? 'N/A',
+			sortingFn: (
+				{ original: { registerCourseTimestamp: a } },
+				{ original: { registerCourseTimestamp: b } }
+			) => sortDates(a, b)
 		},
 		{
-			accessorKey: 'visits',
-			header: () => 'Visits',
-			footer: (info) => info.column.id
+			accessorFn: (course) =>
+				course.registerGroupTimestamp
+					? format(course.registerGroupTimestamp, 'dd.MM.yyyy HH:mm')
+					: 'N/A',
+			header: 'Start of group registration',
+			cell: (info) => info.getValue() ?? 'N/A',
+			sortingFn: (
+				{ original: { registerGroupTimestamp: a } },
+				{ original: { registerGroupTimestamp: b } }
+			) => sortDates(a, b)
 		},
 		{
-			accessorKey: 'status',
-			header: 'Status',
-			footer: (info) => info.column.id
-		},
-		{
-			accessorKey: 'progress',
-			header: 'Profile Progress',
-			footer: (info) => info.column.id
+			accessorKey: 'ectsAmount',
+			header: 'ECTS',
+			cell: (info) => info.getValue()
 		}
 	];
+
+	function sortDates(a: Date | null, b: Date | null) {
+		if (a === null && b === null) return 0;
+		if (a === null) return 1;
+		if (b === null) return -1;
+
+		return compareAsc(a, b);
+	}
 
 	let sorting: SortingState = [];
 
@@ -115,30 +107,35 @@
 		}));
 	};
 
-	const options = writable<TableOptions<Person>>({
-		data: defaultData,
+	const options = writable<TableOptions<CourseData>>({
+		data: courses,
 		columns: defaultColumns,
 		state: {
 			sorting
 		},
+		getRowId: (row) => row.id.toString(),
 		onSortingChange: setSorting,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel()
 	});
 
-	const rerender = () => {
+	const rerender = (data: CourseData[]) => {
 		options.update((options) => ({
 			...options,
-			data: defaultData
+			data: courses
 		}));
 	};
 
 	const table = createSvelteTable(options);
+
+	$: rerender(courses);
+
+	$: selected = $table.getFilteredSelectedRowModel().rows.map((r) => r.original);
 </script>
 
-<div class="overflow-hidden rounded-md">
+<div class="overflow-hidden rounded-b-md">
 	<table class="w-full">
-		<thead>
+		<thead class="border-y border-neutral-300 bg-neutral-50">
 			{#each $table.getHeaderGroups() as headerGroup}
 				<tr>
 					{#each headerGroup.headers as header}
@@ -180,9 +177,9 @@
 		</thead>
 		<tbody>
 			{#each $table.getRowModel().rows as row}
-				<tr class:bg-slate-50={row.getIsSelected()}>
+				<tr class:bg-slate-50={row.getIsSelected()} class="hover:bg-slate-50">
 					{#each row.getVisibleCells() as cell}
-						<td class="border-t px-3 py-2">
+						<td class="border-b px-3 py-2" in:fade>
 							<div class="flex items-center truncate">
 								<svelte:component
 									this={flexRender(cell.column.columnDef.cell, cell.getContext())}
